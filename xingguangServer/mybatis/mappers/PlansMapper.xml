@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PlansMapper">
+	<select id="findPlansList"  resultType="Plans">
+		select * from plans 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Plans">
+	    select  *  
+        from plans a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid  	
+		<where>
+      		<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="ptime != null and ptime != ''">
+		    and a.ptime = #{ptime}
+		</if>
+		<if test="banb != null and banb != ''">
+		    and a.banb = #{banb}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} pid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from plans a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid  
+		<where>
+      		<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="ptime != null and ptime != ''">
+		    and a.ptime = #{ptime}
+		</if>
+		<if test="banb != null and banb != ''">
+		    and a.banb = #{banb}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryPlansById" parameterType="int" resultType="Plans">
+    select  *  
+     from plans a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid  	 where a.pid=#{value}
+  </select>
+ 
+	<insert id="insertPlans" useGeneratedKeys="true" keyProperty="pid" parameterType="Plans">
+    insert into plans
+    (mid,rid,ptime,banb,price)
+    values
+    (#{mid},#{rid},#{ptime},#{banb},#{price});
+  </insert>
+	
+	<update id="updatePlans" parameterType="Plans" >
+    update plans 
+    <set>
+		<if test="mid != null and mid != ''">
+		    mid = #{mid},
+		</if>
+		<if test="rid != null and rid != ''">
+		    rid = #{rid},
+		</if>
+		<if test="ptime != null and ptime != ''">
+		    ptime = #{ptime},
+		</if>
+		<if test="banb != null and banb != ''">
+		    banb = #{banb},
+		</if>
+		<if test="price != null and price != ''">
+		    price = #{price},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="pid != null or pid != ''">
+      pid=#{pid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deletePlans" parameterType="int">
+    delete from  plans where pid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

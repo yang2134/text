@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.AdminMapper">
+	<select id="findAdminList"  resultType="Admin">
+		select * from admin 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Admin">
+	    select  *  
+        from admin a  	
+		<where>
+      		<if test="adminid != null and adminid != 0">
+		    and a.adminid = #{adminid}
+		</if>
+		<if test="adminaccount != null and adminaccount != ''">
+		    and a.adminaccount = #{adminaccount}
+		</if>
+		<if test="adminpassword != null and adminpassword != ''">
+		    and a.adminpassword = #{adminpassword}
+		</if>
+		<if test="adminrole != null and adminrole != ''">
+		    and a.adminrole = #{adminrole}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} adminid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from admin a  
+		<where>
+      		<if test="adminid != null and adminid != 0">
+		    and a.adminid = #{adminid}
+		</if>
+		<if test="adminaccount != null and adminaccount != ''">
+		    and a.adminaccount = #{adminaccount}
+		</if>
+		<if test="adminpassword != null and adminpassword != ''">
+		    and a.adminpassword = #{adminpassword}
+		</if>
+		<if test="adminrole != null and adminrole != ''">
+		    and a.adminrole = #{adminrole}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryAdminById" parameterType="int" resultType="Admin">
+    select  *  
+     from admin a  	 where a.adminid=#{value}
+  </select>
+ 
+	<insert id="insertAdmin" useGeneratedKeys="true" keyProperty="adminid" parameterType="Admin">
+    insert into admin
+    (adminaccount,adminpassword,adminrole)
+    values
+    (#{adminaccount},#{adminpassword},#{adminrole});
+  </insert>
+	
+	<update id="updateAdmin" parameterType="Admin" >
+    update admin 
+    <set>
+		<if test="adminaccount != null and adminaccount != ''">
+		    adminaccount = #{adminaccount},
+		</if>
+		<if test="adminpassword != null and adminpassword != ''">
+		    adminpassword = #{adminpassword},
+		</if>
+		<if test="adminrole != null and adminrole != ''">
+		    adminrole = #{adminrole},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="adminid != null or adminid != ''">
+      adminid=#{adminid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteAdmin" parameterType="int">
+    delete from  admin where adminid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

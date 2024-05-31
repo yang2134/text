@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.OmoreMapper">
+	<select id="findOmoreList"  resultType="Omore">
+		select * from omore 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Omore">
+	    select  *  
+        from omore a  	
+		<where>
+      		<if test="id != null and id != 0">
+		    and a.id = #{id}
+		</if>
+		<if test="oid != null and oid != 0">
+		    and a.oid = #{oid}
+		</if>
+		<if test="sid != null and sid != 0">
+		    and a.sid = #{sid}
+		</if>
+		<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} id desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from omore a  
+		<where>
+      		<if test="id != null and id != 0">
+		    and a.id = #{id}
+		</if>
+		<if test="oid != null and oid != 0">
+		    and a.oid = #{oid}
+		</if>
+		<if test="sid != null and sid != 0">
+		    and a.sid = #{sid}
+		</if>
+		<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryOmoreById" parameterType="int" resultType="Omore">
+    select  *  
+     from omore a  	 where a.id=#{value}
+  </select>
+ 
+	<insert id="insertOmore" useGeneratedKeys="true" keyProperty="id" parameterType="Omore">
+    insert into omore
+    (oid,sid,pid)
+    values
+    (#{oid},#{sid},#{pid});
+  </insert>
+	
+	<update id="updateOmore" parameterType="Omore" >
+    update omore 
+    <set>
+		<if test="oid != null and oid != ''">
+		    oid = #{oid},
+		</if>
+		<if test="sid != null and sid != ''">
+		    sid = #{sid},
+		</if>
+		<if test="pid != null and pid != ''">
+		    pid = #{pid},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="id != null or id != ''">
+      id=#{id}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteOmore" parameterType="int">
+    delete from  omore where id=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

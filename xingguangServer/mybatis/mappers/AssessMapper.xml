@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.AssessMapper">
+	<select id="findAssessList"  resultType="Assess">
+		select * from assess 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Assess">
+		select  a.*,title,mname as by1,photo as by2
+		from assess a  left join movies b on a.mid=b.mid
+		left join members c on a.meid=c.meid
+		<where>
+      		<if test="aid != null and aid != 0">
+		    and a.aid = #{aid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="ascore != null and ascore != 0">
+		    and a.ascore = #{ascore}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} aid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from assess a  left join movies b on a.mid=b.mid  
+		<where>
+      		<if test="aid != null and aid != 0">
+		    and a.aid = #{aid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="ascore != null and ascore != 0">
+		    and a.ascore = #{ascore}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryAssessById" parameterType="int" resultType="Assess">
+    select  a.*,title,mname as by1,photo as by2
+     from assess a  left join movies b on a.mid=b.mid
+     left join members c on a.meid=c.meid
+     where a.aid=#{value}
+  </select>
+ 
+	<insert id="insertAssess" useGeneratedKeys="true" keyProperty="aid" parameterType="Assess">
+    insert into assess
+    (mid,meid,ascore,amemo,atime)
+    values
+    (#{mid},#{meid},#{ascore},#{amemo},now());
+  </insert>
+	
+	<update id="updateAssess" parameterType="Assess" >
+    update assess 
+    <set>
+		<if test="mid != null and mid != ''">
+		    mid = #{mid},
+		</if>
+		<if test="meid != null and meid != ''">
+		    meid = #{meid},
+		</if>
+		<if test="ascore != null and ascore != ''">
+		    ascore = #{ascore},
+		</if>
+		<if test="amemo != null and amemo != ''">
+		    amemo = #{amemo},
+		</if>
+		<if test="atime != null and atime != ''">
+		    atime = #{atime},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="aid != null or aid != ''">
+      aid=#{aid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteAssess" parameterType="int">
+    delete from  assess where aid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 
