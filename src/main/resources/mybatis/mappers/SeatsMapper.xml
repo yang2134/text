@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.SeatsMapper">
+	<select id="findSeatsList"  resultType="Seats">
+		select * from seats 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Seats">
+	    select  *  
+        from seats a  left join rooms b on a.rid=b.rid  	
+		<where>
+      		<if test="sid != null and sid != 0">
+		    and a.sid = #{sid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="pai != null and pai != 0">
+		    and a.pai = #{pai}
+		</if>
+		<if test="hao != null and hao != 0">
+		    and a.hao = #{hao}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} sid
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from seats a  left join rooms b on a.rid=b.rid  
+		<where>
+      		<if test="sid != null and sid != 0">
+		    and a.sid = #{sid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="pai != null and pai != 0">
+		    and a.pai = #{pai}
+		</if>
+		<if test="hao != null and hao != 0">
+		    and a.hao = #{hao}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="querySeatsById" parameterType="int" resultType="Seats">
+    select  *  
+     from seats a  left join rooms b on a.rid=b.rid  	 where a.sid=#{value}
+  </select>
+ 
+	<insert id="insertSeats" useGeneratedKeys="true" keyProperty="sid" parameterType="Seats">
+    insert into seats
+    (rid,pai,hao)
+    values
+    (#{rid},#{pai},#{hao});
+  </insert>
+	
+	<update id="updateSeats" parameterType="Seats" >
+    update seats 
+    <set>
+		<if test="rid != null and rid != ''">
+		    rid = #{rid},
+		</if>
+		<if test="pai != null and pai != ''">
+		    pai = #{pai},
+		</if>
+		<if test="hao != null and hao != ''">
+		    hao = #{hao},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="sid != null or sid != ''">
+      sid=#{sid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteSeats" parameterType="int">
+    delete from  seats where sid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

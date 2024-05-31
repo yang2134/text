@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.MoviesMapper">
+	<select id="findMoviesList"  resultType="Movies">
+		select * from movies 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Movies">
+		select  a.*,tname,by1,ifnull(tt,0) as by2,ifnull(by3,0) as by3
+		from movies a  left join mtype b on a.tid=b.tid
+		left join (select mid,min(price) as by1 from plans  group by mid) b on a.mid=b.mid
+		left join (select mid,cast(avg(ascore) as decimal(16,1)) as tt from assess group by mid) c on a.mid=c.mid
+		left join (select mid,count(*) as by3 from omore m left join plans n on m.pid=n.pid group by mid) d on a.mid=d.mid
+
+		<where>
+      		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="tid != null and tid != 0">
+		    and a.tid = #{tid}
+		</if>
+		<if test="title != null and title != ''">
+		    and a.title = #{title}
+		</if>
+		<if test="pic != null and pic != ''">
+		    and a.pic = #{pic}
+		</if>
+		<if test="daoy != null and daoy != ''">
+		    and a.daoy = #{daoy}
+		</if>
+		<if test="zhuy != null and zhuy != ''">
+		    and a.zhuy = #{zhuy}
+		</if>
+		<if test="shic != null and shic != ''">
+		    and a.shic = #{shic}
+		</if>
+		<if test="matime != null and matime != ''">
+		    and a.matime = #{matime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} mid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from movies a  left join mtype b on a.tid=b.tid  
+		<where>
+      		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="tid != null and tid != 0">
+		    and a.tid = #{tid}
+		</if>
+		<if test="title != null and title != ''">
+		    and a.title = #{title}
+		</if>
+		<if test="pic != null and pic != ''">
+		    and a.pic = #{pic}
+		</if>
+		<if test="daoy != null and daoy != ''">
+		    and a.daoy = #{daoy}
+		</if>
+		<if test="zhuy != null and zhuy != ''">
+		    and a.zhuy = #{zhuy}
+		</if>
+		<if test="shic != null and shic != ''">
+		    and a.shic = #{shic}
+		</if>
+		<if test="matime != null and matime != ''">
+		    and a.matime = #{matime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryMoviesById" parameterType="int" resultType="Movies">
+		select  a.*,tname,by1,ifnull(tt,0) as by2,ifnull(by3,0) as by3
+		from movies a  left join mtype b on a.tid=b.tid
+					   left join (select mid,min(price) as by1 from plans  group by mid) b on a.mid=b.mid
+					   left join (select mid,cast(avg(ascore) as decimal(16,1)) as tt from assess group by mid) c on a.mid=c.mid
+						left join (select mid,count(*) as by3 from omore m left join plans n on m.pid=n.pid group by mid) d on a.mid=d.mid
+		where a.mid=#{value}
+  </select>
+ 
+	<insert id="insertMovies" useGeneratedKeys="true" keyProperty="mid" parameterType="Movies">
+    insert into movies
+    (tid,title,pic,daoy,zhuy,shic,memo,matime)
+    values
+    (#{tid},#{title},#{pic},#{daoy},#{zhuy},#{shic},#{memo},now());
+  </insert>
+	
+	<update id="updateMovies" parameterType="Movies" >
+    update movies 
+    <set>
+		<if test="tid != null and tid != ''">
+		    tid = #{tid},
+		</if>
+		<if test="title != null and title != ''">
+		    title = #{title},
+		</if>
+		<if test="pic != null and pic != ''">
+		    pic = #{pic},
+		</if>
+		<if test="daoy != null and daoy != ''">
+		    daoy = #{daoy},
+		</if>
+		<if test="zhuy != null and zhuy != ''">
+		    zhuy = #{zhuy},
+		</if>
+		<if test="shic != null and shic != ''">
+		    shic = #{shic},
+		</if>
+		<if test="memo != null and memo != ''">
+		    memo = #{memo},
+		</if>
+		<if test="matime != null and matime != ''">
+		    matime = #{matime},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="mid != null or mid != ''">
+      mid=#{mid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteMovies" parameterType="int">
+    delete from  movies where mid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

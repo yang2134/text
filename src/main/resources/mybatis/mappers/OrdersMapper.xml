@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.OrdersMapper">
+	<select id="findOrdersList"  resultType="Orders">
+		select * from orders 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Orders">
+	    select  *,b.pic as by1
+        from orders a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid
+		<where>
+      		<if test="oid != null and oid != 0">
+		    and a.oid = #{oid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="rdate != null and rdate != ''">
+		    and a.rdate = #{rdate}
+		</if>
+		<if test="quan != null and quan != 0">
+		    and a.quan = #{quan}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="ostext != null and ostext != ''">
+		    and a.ostext = #{ostext}
+		</if>
+			<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} oid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from orders a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid  
+		<where>
+      		<if test="oid != null and oid != 0">
+		    and a.oid = #{oid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="rid != null and rid != 0">
+		    and a.rid = #{rid}
+		</if>
+		<if test="rdate != null and rdate != ''">
+		    and a.rdate = #{rdate}
+		</if>
+		<if test="quan != null and quan != 0">
+		    and a.quan = #{quan}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="ostext != null and ostext != ''">
+		    and a.ostext = #{ostext}
+		</if>
+		<if test="pid != null and pid != 0">
+		    and a.pid = #{pid}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryOrdersById" parameterType="int" resultType="Orders">
+    select  *,b.pic as by1
+     from orders a  left join movies b on a.mid=b.mid  left join rooms c on a.rid=c.rid  	 where a.oid=#{value}
+  </select>
+ 
+	<insert id="insertOrders" useGeneratedKeys="true" keyProperty="oid" parameterType="Orders">
+    insert into orders
+    (mid,rid,rdate,quan,smoney,meid,atime,ostext,pid)
+    values
+    (#{mid},#{rid},#{rdate},#{quan},#{smoney},#{meid},now(),#{ostext},#{pid})
+  </insert>
+	
+	<update id="updateOrders" parameterType="Orders" >
+    update orders 
+    <set>
+		<if test="mid != null and mid != ''">
+		    mid = #{mid},
+		</if>
+		<if test="rid != null and rid != ''">
+		    rid = #{rid},
+		</if>
+		<if test="rdate != null and rdate != ''">
+		    rdate = #{rdate},
+		</if>
+		<if test="quan != null and quan != ''">
+		    quan = #{quan},
+		</if>
+		<if test="smoney != null and smoney != ''">
+		    smoney = #{smoney},
+		</if>
+		<if test="meid != null and meid != ''">
+		    meid = #{meid},
+		</if>
+		<if test="atime != null and atime != ''">
+		    atime = #{atime},
+		</if>
+		<if test="ostext != null and ostext != ''">
+		    ostext = #{ostext},
+		</if>
+        		<if test="pid != null and pid != ''">
+		    pid = #{pid},
+        		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="oid != null or oid != ''">
+      oid=#{oid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteOrders" parameterType="int">
+    delete from  orders where oid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 

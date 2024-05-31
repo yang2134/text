@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CollectsMapper">
+	<select id="findCollectsList"  resultType="Collects">
+		select * from collects 
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultType="Collects">
+	    select  a.*,title as by1,pic as by2,daoy as by3
+        from collects a  left join movies b on a.mid=b.mid
+		<where>
+      		<if test="cid != null and cid != 0">
+		    and a.cid = #{cid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+
+    order by ${sort} cid desc
+
+    <if test="page">
+			limit #{offset} ,#{pageSize}
+		</if>
+	</select>	
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="Int">
+		select count(0) from collects a  
+		<where>
+      		<if test="cid != null and cid != 0">
+		    and a.cid = #{cid}
+		</if>
+		<if test="mid != null and mid != 0">
+		    and a.mid = #{mid}
+		</if>
+		<if test="meid != null and meid != 0">
+		    and a.meid = #{meid}
+		</if>
+		<if test="atime != null and atime != ''">
+		    and a.atime = #{atime}
+		</if>
+		<if test="condition != null and condition != ''">
+		    ${condition} 
+		</if>
+
+    </where>
+	</select>	
+	
+	<select id="queryCollectsById" parameterType="int" resultType="Collects">
+		select  a.*,title as by1,pic as by2,daoy as by3
+		from collects a  left join movies b on a.mid=b.mid
+		where a.cid=#{value}
+  </select>
+ 
+	<insert id="insertCollects" useGeneratedKeys="true" keyProperty="cid" parameterType="Collects">
+    insert into collects
+    (mid,meid,atime)
+    values
+    (#{mid},#{meid},now());
+  </insert>
+	
+	<update id="updateCollects" parameterType="Collects" >
+    update collects 
+    <set>
+		<if test="mid != null and mid != ''">
+		    mid = #{mid},
+		</if>
+		<if test="meid != null and meid != ''">
+		    meid = #{meid},
+		</if>
+		<if test="atime != null and atime != ''">
+		    atime = #{atime},
+		</if>
+
+    </set>
+   <where> 
+    <if test="condition != null and condition != ''">
+      ${condition}
+    </if>
+    <if test="cid != null or cid != ''">
+      cid=#{cid}
+    </if>
+   </where>     
+  </update>	
+ 
+	
+	<delete id="deleteCollects" parameterType="int">
+    delete from  collects where cid=#{value}
+  </delete>
+
+	
+	
+</mapper>
+
+ 
