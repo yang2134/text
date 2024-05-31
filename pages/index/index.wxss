@@ -1,0 +1,7 @@
+.appmsg3{}
+
+
+.display{
+    border-bottom: 1px solid #9fd0e6;
+    height: 235rpx;
+}

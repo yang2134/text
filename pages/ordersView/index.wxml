@@ -1,0 +1,85 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+ <view slot="backText">返回</view>
+ <view slot="content">我的购票行情</view>
+</cu-custom>
+<view class="container">    
+ <view class="weui-grids   appmsg1  weui-grids-border"> 
+  <block wx:for="{{msgs1}}">
+
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      影片名称：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.title}}
+    </view>
+   </view>
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      影片图片：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     <image class="weui-media-box__thumb" src="{{url}}{{item.by1}}" style="height: 80px;width:80px;" />
+    </view>
+   </view>
+
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      日期：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.rdate}}
+    </view>
+   </view>
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      放映厅：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.rname}}
+    </view>
+   </view>
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      数量：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.quan}}
+    </view>
+   </view>
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      总金额：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.smoney}}
+    </view>
+   </view>
+   <view class="weui-cell weui-cell_input ">
+    <view class="weui-cell__hd">
+     <view class="weui-label">
+      座位：
+     </view>
+    </view>
+    <view class="weui-cell__bd">
+     {{item.ostext}}
+    </view>
+   </view>
+
+  </block> 
+ </view> 
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

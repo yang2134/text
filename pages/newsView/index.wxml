@@ -1,0 +1,32 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+ <view slot="backText">返回</view>
+ <view slot="content">资讯详情</view>
+</cu-custom>
+<view class="container">    
+ <view class="data1"> 
+  <block wx:for="{{rowdata1}}"> 
+   <view class="weui-article"> 
+    <view style="font-size: 16px;text-align: center;font-weight: bold">
+     {{item.title}}
+    </view>
+
+    <view style="width: 100%;text-align: center">
+    发布时间：{{item.ntime}}
+    </view>
+
+
+    <view >
+
+
+     <rich-text  nodes="{{item.memo}}" class="padding-sm"></rich-text>
+    </view> 
+
+   </view> 
+  </block> 
+ </view>
+
+
+
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

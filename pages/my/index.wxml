@@ -1,0 +1,46 @@
+<import src="../../wxParse/wxParse.wxml" />
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}">
+ <view slot="content">我的</view></cu-custom>
+<view class="container">
+ <view class="userinfo padding-top padding-bottom bg-gradual-blue light">
+  <image class="userinfo-avatar" src="{{pic}}" mode="cover"></image>
+  <text class="userinfo-nickname">{{nc}}</text>
+
+
+ </view>
+ <view class="hr"></view>
+
+
+ <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+
+  <view class="cu-item arrow">
+   <button class="cu-btn content"  bindtap="navigateTo" data-url="orders" >
+    <text class="cuIcon-qrcode text-green"></text>
+    <text class="text-grey">我的电影票</text>
+   </button>
+  </view>
+
+
+
+  <view class="cu-item arrow">
+   <button class="cu-btn content"  bindtap="navigateTo" data-url="collect" >
+    <text class="cuIcon-copy text-red"></text>
+    <text class="text-grey">我的收藏夹</text>
+   </button>
+  </view>
+
+
+
+  <view class="cu-item arrow">
+   <button class="cu-btn content"  bindtap="navigateTo" data-url="info" >
+    <text class="cuIcon-writefill text-cyan"></text>
+    <text class="text-grey">修改个人信息</text>
+   </button>
+  </view>
+
+ </view>
+
+
+
+ <template is="toastbar" data="{{item:toastitem}}" />
+</view>

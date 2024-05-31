@@ -1,0 +1,15 @@
+.data0{}video{
+   height:150px;
+   width: 100%;
+   box-sizing: border-box;
+}
+.weui-video{
+  padding:0px;
+  width: 100%;
+  box-sizing: border-box;
+}.appmsg4{}.appmsg5{}
+           .weui-pl2{
+               width: 20%;
+               text-align: center;
+
+           }

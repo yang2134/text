@@ -1,0 +1,29 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}">
+ <view slot="content">资讯</view></cu-custom>
+<view class="container">    
+ <view class="weui-grids   appmsg1  weui-grids-border"> 
+  <block wx:for="{{msgs1}}"> 
+   <view class="weui-media-box"> 
+    <view bindtap="navigateTo" data-url="newsView" data-id="{{item.nid}}" class="weui-media-box_appmsg    " style="">
+     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+      <image class="weui-media-box__thumb" src="{{url}}{{item.photo}}" style="" />
+     </view> 
+     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg"> 
+      <view class="weui-media-box__title" style="{{color}}">
+       <view class="weui-pl">
+        {{item.title}}
+       </view>
+      </view> 
+      <view class="weui-media-box__desc" style="{{dcolor}}">
+       <view class="weui-pl">
+        {{item.ntime}}
+       </view>
+      </view> 
+     </view> 
+    </view> 
+   </view> 
+  </block> 
+ </view> 
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

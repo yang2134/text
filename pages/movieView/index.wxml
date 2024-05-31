@@ -1,0 +1,225 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+ <view slot="backText">返回</view>
+ <view slot="content">影片详情</view>
+</cu-custom>
+<view class="container">    
+ <view class="data1"> 
+  <block wx:for="{{rowdata1}}">
+   <view class="weui-media-box" class="display">
+    <view bindtap="navigateTo" data-url="movieView" data-id="{{item.mid}}" class="weui-media-box_appmsg    " style="margin-top: 10px;">
+     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="height:135px;width: 110px;">
+      <image class="weui-media-box__thumb" src="{{url}}{{item.pic}}" style="width: 100px;height: 135px" />
+     </view>
+     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+      <view class="weui-media-box__title" style="{{color}}">
+       <view class="weui-pl">
+        {{item.title}}
+       </view>
+
+      </view>
+      <view class="weui-media-box__desc" style="{{dcolor}}">
+       <view class="weui-pl" >
+        导演: {{item.daoy}}
+       </view>
+
+       <view class="weui-pl">
+        主演：{{item.zhuy}}
+       </view>
+       <view class="weui-pl">
+        时长：{{item.shic}}分钟
+       </view>
+
+       <view class="weui-pl">
+        票价：<text style="color: red;font-size: 16px">{{item.by1}}</text> 元起
+       </view>
+       <view class="weui-pl" wx:if="{{item.by2!=0.0}}" >
+        评分：<text style="color: red;font-size: 16px"> {{item.by2}}</text> 分
+       </view>
+       <view class="weui-pl" wx:else >
+        评分：暂无评分
+       </view>
+       <view class="weui-pl">
+
+        <button type="button" data-field="buttons2" data-index="0"  class="cu-tag bg-green" catch:tap="shoucang"   wx:if="{{msg=='0'}}"
+        >加入收藏夹</button>
+
+
+        <button type="button" data-field="buttons2" data-index="0"  class="cu-tag bg-red"  wx:else
+    >已收藏</button>
+
+       </view>
+      </view>
+     </view>
+    </view>
+   </view>
+  </block> 
+ </view>  
+ <view class="weui-tab"> 
+  <view class="weui-navbar  nav-blue">
+   <block wx:for="{{tabs2}}"> 
+    <view data-id="{{index}}" class="weui-navbar__item {{activeIndex2 == index ? 'weui-bar__item_on on' : ''}}" bindtap="tabClick2"> 
+     <view class="weui-navbar__title">
+      {{item}}
+     </view> 
+    </view> 
+   </block> 
+  </view> 
+  <view class="weui-tab__panel"> 
+   <view class="weui-tab__content" hidden="{{activeIndex2 != 0}}">
+    <rich-text  nodes="{{rmemo}}"></rich-text>
+   </view> 
+
+   <view class="weui-tab__content" hidden="{{activeIndex2 != 1}}">
+    <view class="weui-grids   appmsg4  weui-grids-border"> 
+     <block wx:for="{{msgs4}}"> 
+      <view class="weui-media-box"> 
+       <view class="weui-media-box_appmsg    " style="border-bottom:1px solid red;margin-bottom: 3px;">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+         <image class="weui-media-box__thumb" src="{{item.by2}}" style="border-radius: 30px" />
+        </view> 
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+         <view class="weui-media-box__title" style="{{color}}">
+          <view class="weui-pl">
+           <text style="color:red;font-size: 18px;">
+            {{item.ascore}}分
+
+
+           </text>
+
+
+          </view>
+
+         </view> 
+         <view class="weui-media-box__desc" style="{{dcolor}}">
+          <view class="weui-pl">
+           {{item.amemo}}
+           <text class=" cuIcon-timefill fr">{{item.atime}}</text>
+          </view>
+
+
+
+         </view> 
+        </view> 
+       </view> 
+      </view> 
+     </block>
+
+
+     <form class="row-form" bindsubmit="formSubmit5" bindreset="formReset5">
+      <view class="weui-cell">
+      <view class="weui-cell__hd">
+
+       <view class="weui-label">
+        评分：
+       </view>
+      </view>
+      <view class="weui-cell__bd">
+       <radio-group class="weui-form-item" bindchange="changescore" name="ascore">
+        <label wx:for="{{radioItems6}}" class="iblock">
+         <radio value="{{item.value}}" checked="{{item.checked}}" class="weui-form-checkbox" />
+         <view class="weui-form-label">
+          <icon class="weui-icon-radio checked" wx:if="{{item.checked}}"></icon>
+          <icon class="weui-icon-radio" wx:if="{{!item.checked}}"></icon>
+          <view class="weui-form-text">
+           {{item.label}}
+          </view>
+         </view> </label>
+       </radio-group>
+      </view>
+      </view>
+      <view class="weui-cell">
+       <view class="weui-cell__hd">
+        <view class="weui-label">
+         评语：
+        </view>
+       </view>
+       <view class="weui-cell__bd">
+        <textarea class="weui-textarea" placeholder="请输入评语" name="amemo" value="{{kong}}" style="border: 1px solid black;height:50px;"></textarea>
+       </view>
+      </view>
+      <view class="weui-form button7">
+       <view class="weui-form-item">
+        <button type="submit" data-field="buttons7" data-index="0" form-type="submit" class="weui-btn bg-gradual-blue  ">发表</button>
+       </view>
+      </view>
+     </form>
+
+    </view> 
+   </view> 
+   <view class="weui-tab__content" hidden="{{activeIndex2 != 2}}">
+    <view class="weui-grids   appmsg5  weui-grids-border">
+
+     <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+       <view class="weui-label">
+        观影日期：
+       </view>
+      </view>
+      <view class="weui-cell__bd">
+       <picker bindchange="selectChange1" value="{{valueIndex1}}" range="{{selectItems1}}">
+        <view class="weui-select weui-select_in-select-after">
+         {{selectItems1[valueIndex1]}}
+        </view>
+       </picker>
+      </view>
+
+     </view>
+
+     <view class="weui-media-box weui-media-box_text  " style="">
+
+
+       <view class="weui-media-box__desc" style="display: flex;">
+        <view class="weui-pl2">
+         放映厅
+        </view>
+        <view class="weui-pl2">
+         放映时间
+        </view>
+        <view class="weui-pl2">
+         版本
+        </view>
+        <view class="weui-pl2">
+         票价
+        </view>
+        <view class="weui-pl2">
+         操作
+        </view>
+       </view>
+
+
+     </view>
+
+     <block wx:for="{{msgs5}}"> 
+      <view class="weui-media-box weui-media-box_text  " style=""> 
+       <view>
+
+        <view class="weui-media-box__desc" style="display:flex;height:28px;line-height: 28px;">
+         <view class="weui-pl2">
+          {{item.rname}}
+         </view>
+         <view class="weui-pl2">
+          {{item.ptime}}
+         </view>
+         <view class="weui-pl2">
+          {{item.banb}}
+         </view>
+         <view class="weui-pl2" style="color: red">
+          {{item.price}}
+         </view>
+         <view class="weui-pl2">
+          <button type="button" data-field="buttons2"  bindtap="navigateTo2" data-url="seat" data-id="{{item.pid}}"
+                  data-rid="{{item.rid}}"  data-price="{{item.price}}"   data-index="0"  form-type="submit" style="padding:0 0 0 0;height: 28px;width:50px;font-size:14px;" class="weui-btn bg-red  mini-btn ">订票</button>
+
+         </view>
+        </view>
+
+       </view> 
+      </view> 
+     </block> 
+    </view> 
+   </view> 
+  </view> 
+ </view> 
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

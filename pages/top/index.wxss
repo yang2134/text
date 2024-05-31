@@ -1,0 +1,6 @@
+.weui-grids1{}
+
+.display{
+    border-bottom: 1px solid #e67d7d;
+    height: 235rpx;
+}

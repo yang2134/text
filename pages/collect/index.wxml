@@ -1,0 +1,41 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+ <view slot="backText">返回</view>
+ <view slot="content">我的收藏夹</view>
+</cu-custom>
+<view class="container">    
+ <view class="weui-grids   appmsg1  weui-grids-border"> 
+  <block wx:for="{{msgs1}}"> 
+   <view class="weui-media-box" style="border-bottom: 1px solid #8dc9e4;">
+    <view bindtap="navigateTo" data-url="movieView" data-id="{{item.mid}}" class="weui-media-box_appmsg    " style="">
+     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+      <image class="weui-media-box__thumb" src="{{url}}{{item.by2}}" style="" />
+     </view> 
+     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg"> 
+      <view class="weui-media-box__title" style="{{color}}">
+       <view class="weui-pl">
+        {{item.by1}}
+       </view>
+      </view>
+      <view class="weui-media-box__desc" style="{{dcolor}}">
+       <view class="weui-pl">
+        导演：{{item.by3}}
+       </view>
+      </view>
+      <view class="weui-media-box__desc" style="{{dcolor}}">
+       <view class="weui-pl">
+        收藏时间：{{item.atime}}
+       </view>
+      </view> 
+     </view> 
+    </view> 
+    <view class="btn-plus-right"> 
+     <view class="msg-delete" bindtap="delData1" data-id="{{item.cid}}">
+      <text class="icon iconfont icon-delete1"></text> 
+     </view> 
+    </view> 
+   </view> 
+  </block> 
+ </view> 
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

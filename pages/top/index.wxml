@@ -1,0 +1,43 @@
+<import src="../../wxParse/wxParse.wxml" /> 
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}">
+ <view slot="content">榜单</view></cu-custom>
+<view class="container">   
+ <view class="weui-grids weui-grids1 "> 
+  <block wx:for="{{grids1}}">
+   <view class="weui-media-box" class="display">
+    <view bindtap="navigateTo" data-url="movieView" data-id="{{item.mid}}" class="weui-media-box_appmsg    " style="margin-top: 10px;">
+     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="height: 85px;width: 80px">
+      <image class="weui-media-box__thumb" src="{{url}}{{item.pic}}" style="width: 150rpx;height: 200rpx" />
+     </view>
+     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+      <view class="weui-media-box__title" style="{{color}}">
+       <view class="weui-pl" style="width: 70%">
+        {{item.title}}
+       </view>
+
+       <view class="weui-pl" wx:if="{{item.tt!=0.0}}" style="width:20%;color:red;font-size:16px;right:0;margin-top: -20px;position:absolute;">
+        {{item.by2=='0.0'?'暂无':item.by2+'分'}}<text style="font-size: 12px"></text>
+       </view>
+      </view>
+      <view class="weui-media-box__desc" style="{{dcolor}}">
+       <view class="weui-pl" >
+        导演: {{item.daoy}}
+       </view>
+
+       <view class="weui-pl">
+        主演：{{item.zhuy}}
+       </view>
+       <view class="weui-pl">
+        时长：{{item.shic}}分钟
+       </view>
+       <view class="weui-pl">
+        票价：<text style="color: red;font-size: 16px">{{item.by1}}</text> 元起
+       </view>
+      </view>
+     </view>
+    </view>
+   </view>
+  </block> 
+ </view> 
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>

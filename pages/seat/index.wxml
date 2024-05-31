@@ -1,0 +1,62 @@
+<import src="../../wxParse/wxParse.wxml" />
+<wxs module="tools" src="../function.wxs" />
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+ <view slot="backText">返回</view>
+ <view slot="content">订票</view>
+</cu-custom>
+<view class="container">   
+ <view class="timeline weui-times1">
+  <view class="dis">
+  <block wx:for="{{times1}}">
+
+   <block wx:if="{{tools.arrayfind(tval,item.sid)>0}}" >
+
+    <button type="button" class="btnn kong"  bindtap='dianji' data-id='{{item.sid}}'  data-val='{{item.pai}}排-{{item.hao}}号'></button>
+
+   </block>
+   <block wx:else>
+
+    <block wx:if="{{item.pid!=null}}" >
+     <button type="button" class="btnn xuan"   data-id='{{item.sid}}'  data-val='{{item.pai}}排-{{item.hao}}号'></button>
+
+    </block>
+    <block wx:else>
+     <button type="button" class="btnn "  bindtap='dianji' data-id='{{item.sid}}'  data-val='{{item.pai}}排-{{item.hao}}号'></button>
+
+    </block>
+
+
+
+   </block>
+
+
+
+   <block wx:if="{{total==item.hao}}">
+    <text>\n</text>
+   </block>
+
+
+  </block>
+  </view>
+ </view>
+
+ <view class="weui-cell weui-cell_input ">
+  <view class="weui-cell__hd"  style="white-space:unset;width:100%;text-align: left;">
+   <view class="weui-label" style=" white-space: unset;text-align: left">
+    您的选座：{{text}}
+   </view>
+  </view>
+ </view>
+
+ <view class="weui-form button2" style="display:flex;position:absolute;bottom:10px;width: 100%">
+  <view>
+   总金额：<text style="color: red;font-size: 20px;font-weight: bold">{{smoney}}</text>元
+  </view>
+  <view class="weui-form-item" style="position:absolute;right: 10px;">
+
+   <button type="button" data-field="buttons2" data-index="0"  form-type="submit" style="width: 100px" class="weui-btn bg-red    mini-btn   "  bindtap="pay" >立即支付</button>
+  </view>
+ </view>
+
+ <template is="toastbar" data="{{item:toastitem}}" /> 
+</view>
