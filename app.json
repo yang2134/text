@@ -1,0 +1,63 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/my/index",
+
+
+    "pages/index/index",
+
+
+
+    "pages/news/index",
+    "pages/newsView/index",
+    "pages/top/index",
+    "pages/movieView/index",
+    "pages/seat/index",
+    "pages/info/index",
+    "pages/collect/index",
+    "pages/orders/index",
+    "pages/ordersView/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#39b54a",
+    "navigationBarTitleText": "电影票小程序",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#09bb07",
+    "borderStyle": "white",
+    "backgroundColor": "#f7f7fa",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "assets/images/grid1c.png",
+        "selectedIconPath": "assets/images/icon2_lj.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/top/index",
+        "iconPath": "assets/images/icon1_jb2.png",
+        "selectedIconPath": "assets/images/icon1_jb.png",
+        "text": "榜单"
+      },
+      {
+        "pagePath": "pages/news/index",
+        "iconPath": "assets/images/grid2c.png",
+        "selectedIconPath": "assets/images/grid2.png",
+        "text": "资讯"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "iconPath": "assets/images/icon2_xm2.png",
+        "selectedIconPath": "assets/images/icon2_xm.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}
